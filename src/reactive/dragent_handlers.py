@@ -48,10 +48,10 @@ def setup_amqp_req(amqp):
 # other kinds of decorators here.  This rules out adding other things into the
 # charm args list.  It is also CPython dependent.
 @reactive.when('amqp.available')
-def render_stuff(amqp):
+def render_stuff(*args):
     """Render the configuration for Barbican when all the interfaces are
     available.
     """
-    hookenv.log("about to call the render_configs with {}".format(amqp))
-    dragent.render_configs(amqp)
+    hookenv.log("about to call the render_configs with {}".format(args))
+    dragent.render_configs(charm.optional_interfaces(args, 'bgp.available'))
     dragent.assess_status()
